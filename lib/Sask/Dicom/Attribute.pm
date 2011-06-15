@@ -1,6 +1,4 @@
 package Sask::Dicom::Attribute; # This is the junction of VR/value/tag...
-use warnings;
-use strict;
 use Mouse;
 
 has "vr" =>
