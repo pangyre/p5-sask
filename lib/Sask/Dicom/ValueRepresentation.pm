@@ -1,11 +1,9 @@
 package Sask::Dicom::ValueRepresentation;
-use warnings;
-use strict;
 use Mouse;
 use Mouse::Util::TypeConstraints;
+
 enum "VR" => qw( AE AS AT CS DA DS DT FL FD IS LO LT OB OF OW OX PN SH
                  SL SQ SS ST TM UI UL UN US UT XS XO );
-
 
 subtype "AE"
     => as "Str"
