@@ -1,6 +1,4 @@
 package Sask::Dicom::AttributeTag;
-use warnings;
-use strict;
 use Mouse;
 use Mouse::Util::TypeConstraints;
 use Data::Dump ();
