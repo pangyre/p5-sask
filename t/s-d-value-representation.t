@@ -3,7 +3,8 @@ use warnings;
 use strict;
 use Test::More;
 
-ok(0, "Write some tests");
+BEGIN { use_ok("Sask::Dicom::ValueRepresentation") }
+
 
 done_testing();
 
