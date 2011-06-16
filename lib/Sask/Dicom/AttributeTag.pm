@@ -4,6 +4,7 @@ use strict;
 use Mouse;
 use Mouse::Util::TypeConstraints;
 use Data::Dump ();
+use Scalar::Util "looks_like_number";
 
 # These are just guesses and are missing some cross validation.
 subtype "GroupInt"
@@ -26,7 +27,13 @@ sub BUILDARGS {
         @_ == 2 ? ( group => $_[0], element => $_[1] ) :
         @_ == 4 ? @_ :
         confess "Bad arguments to new: ", Data::Dump::dump(@_);
-    $_ = hex($_) for values %arg;
+    for my $val ( values %arg )
+    {
+        #print "====> $val does NOT like number\n" unless looks_like_number($val);
+        #next unless looks_like_number($val);
+        $val = hex($val);
+    }
+
     \%arg;
 }
 
