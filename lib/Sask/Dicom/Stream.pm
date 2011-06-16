@@ -11,4 +11,6 @@ use Carp;
 1;
 
 __DATA__
-These go in ...? VR.pm?
+
+Need to be able to read blocks, SQs, sizes, pixel data only, skip
+pixel data, iterate on tags, et cetera.
