@@ -1,0 +1,21 @@
+#!/usr/bin/env perl
+use warnings;
+use strict;
+use autodie;
+#use YAML;
+use Sask::Dicom::Stream;
+
+open my $io, "<", shift || die "Give a DICOM file to read!\n";
+
+my $reader = Sask::Dicom::Stream->new( io => $io );
+$reader->read_meta_information;
+
+print "DICOM resource is ", $reader->implicit_vr ? "implicit" : "explicit";
+print $/;
+
+exit 0;
+
+#  Subroutines
+#---------------------------------------------------------------------
+
+__DATA__

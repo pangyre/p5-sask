@@ -27,7 +27,6 @@ sub BUILDARGS {
         #next unless looks_like_number($val);
         $val = hex($val);
     }
-
     \%arg;
 }
 
