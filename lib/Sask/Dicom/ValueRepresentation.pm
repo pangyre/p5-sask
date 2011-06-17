@@ -2,8 +2,10 @@ package Sask::Dicom::ValueRepresentation;
 use Mouse;
 use Mouse::Util::TypeConstraints;
 
+use overload q{""} => sub { +shift->code }, fallback => 1;
+
 sub _trim {
-    $_[0] =~ y/\0//d;
+    $_[0] =~ y/\000//d;
     $_[0] =~ s/\A\s+//;
     $_[0] =~ s/\s+\z//;
 }
@@ -214,6 +216,10 @@ has "code" =>
 has "size" =>
     is => "ro",
     ;
+
+sub fml {
+    $VR{+shift->code}{two_and_four};
+}
 
 1;
 

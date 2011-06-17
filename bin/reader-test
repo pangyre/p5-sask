@@ -10,8 +10,10 @@ open my $io, "<", shift || die "Give a DICOM file to read!\n";
 my $reader = Sask::Dicom::Stream->new( io => $io );
 $reader->read_meta_information;
 
-print "DICOM resource is ", $reader->implicit_vr ? "implicit" : "explicit";
-print $/;
+print "DICOM resource endianness: ", $reader->endianness, $/;
+
+#print "DICOM resource is ", $reader->implicit_vr ? "implicit" : "explicit";
+#print $/;
 
 exit 0;
 

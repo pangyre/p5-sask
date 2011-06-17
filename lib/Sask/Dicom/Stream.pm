@@ -4,6 +4,9 @@ use autodie;
 use IO::Handle;
 use IO::String;
 use Carp;
+
+use Sask::Dicom::ValueRepresentation;
+
 # Coerce from string/filehandle?
 has "io" =>
     is => "ro",
@@ -67,76 +70,43 @@ sub read_meta_information {
         "little" : unpack("n",$buf) == 2 ?
             "big" : croak "No endianness could be determined";
     $self->set_endianness($endian);
-}
 
+    my $us_template = $endian eq "little" ? "v" : "n";
+    my $ul_template = $endian eq "little" ? "V" : "N";
+
+    sysseek($self->io,-2,1); # Rewind for symmetric parsing.
+
+    my $i;
+    while ( $self->io->sysread($buf,6) )
+    {
+        my ( $group, $element, $vr ) = unpack "${us_template}2 A2", $buf;
+        $vr = Sask::Dicom::ValueRepresentation->new({code => $vr});
+        printf("%04x,%04x VR:%s\n",
+               $group, $element, $vr);
+
+        my $length;
+        if ( $vr->fml )
+        {
+            $self->io->sysread($buf,2); # Reserved, toss. seek instead?
+            $self->io->sysread($buf,4);
+            $length = unpack $ul_template, $buf;
+        }
+        else
+        {
+            $self->io->sysread($buf,2);
+            $length = unpack $us_template, $buf;
+        }
+        printf("length -> %s\n", $length);
+        $self->io->sysread($buf,$length);
+        print "skipping..." and next if $vr->fml or $length > 100;
+        my $value = unpack "A*", $buf;
+        $value =~ s/[^[:print:]+]//g;
+        printf(" value -> %s\n", $value);
+    }
+}
 
 1;
 
 __DATA__
 Need to be able to read blocks, SQs, sizes, pixel data only, skip
 pixel data, iterate on tags, et cetera.
-
-
-my $us_template = $endian eq "LITTLE" ? "v" : "n";
-my $ul_template = $endian eq "LITTLE" ? "V" : "N";
-
-print "Endianness: $endian";
-
-printf("%04x,", unpack $us_template, $buf);
-$self->io->sysread($buf,2) == 2 or die;
-printf("%04x ", unpack $us_template, $buf);
-
-$self->io->sysread($buf,2);
-printf("VR:%s ", $buf);
-$self->io->sysread($buf,2) or die; # What is this block?
-printf("%s ", unpack $us_template, $buf);
-
-$self->io->sysread($buf,4) or die;
-printf("%s\n", unpack($ul_template, $buf));
-
-# sysseek($self->io,unpack($ul_template, $buf),0);
-
-my %FML = map { $_ => 1 } qw( OB OW OF SQ UT UN );
-
-my $i;
-while ( $self->io->sysread($buf,6) )
-{
-   my ( $group, $element, $vr ) = unpack "${us_template}2 A2",
-   $buf;
-   printf("%04x,%04x VR:%s\n",
-          $group, $element, $vr);
-
-
-   my $length;
-   if ( $FML{$vr} )
-   {
-       $self->io->sysread($buf,2); # Reserved, toss. seek instead?
-       $self->io->sysread($buf,4);
-       $length = unpack $ul_template, $buf;
-   }
-   else
-   {
-       $self->io->sysread($buf,2);
-       $length = unpack $us_template, $buf;
-   }
-   printf("length -> %s\n", $length);
-   $self->io->sysread($buf,$length);
-
-   print "skipping..." and next if $length > 100;
-   printf(" value -> %s\n", unpack "A*", $buf);
-}
-
-exit 0;
-
-__DATA__
-
-1.2.840.10008.5.1.4.1.1.6.1
-
-(0002,0000) UL 248                                      #   4, 1
-FileMetaInformationGroupLength
-(0002,0001) OB 00\01                                    #   2, 1
-FileMetaInformationVersion
-(0002,0002) UI =UltrasoundImageStorage                  #  28, 1
-MediaStorageSOPClassUID
-(0002,0003) UI [1.2.840.113711.999999.333.1047496473.1.1] #  40, 1
-MediaStorageSOPInstanceUID
