@@ -1,11 +1,17 @@
 package Sask::Dicom::Stream;
-use warnings;
-use strict;
+use Mouse;
 use autodie;
 use IO::Handle;
 use IO::String;
 use Carp;
-
+# Coerce from string/filehandle?
+has "io" =>
+    is => "ro",
+    isa => "FileHandle|IO::String|IO::Handle",
+    required => 1,
+#    lazy => 1,
+#    handles => 
+    ;
 
 
 1;
