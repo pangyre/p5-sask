@@ -5,7 +5,7 @@ use IO::Handle;
 use IO::String;
 use Carp;
 
-use Sask::Dicom::ValueRepresentation;
+use Sask::Dicom::ValueRepresentation "vr";
 
 # Coerce from string/filehandle?
 has "io" =>
@@ -77,7 +77,7 @@ sub read_meta_information {
     while ( $self->io->sysread($buf,6) )
     {
         my ( $group, $element, $vr ) = unpack "${us_template}2 A2", $buf;
-        $vr = eval { Sask::Dicom::ValueRepresentation->new({code => $vr}) };
+        $vr = eval { vr($vr) };
         printf("%04x,%04x VR:%s\n",
                $group, $element, $vr);
 

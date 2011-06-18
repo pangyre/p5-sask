@@ -2,7 +2,11 @@ package Sask::Dicom::ValueRepresentation;
 use Mouse;
 use Mouse::Util::TypeConstraints;
 
-# use Sub::Exporter or something to make a vr(self) --> new exported by default.
+use Sub::Exporter -setup => { exports => [qw(  vr )] };
+
+sub vr {
+    __PACKAGE__->new({ code => +shift });
+}
 
 use overload q{""} => sub { +shift->code }, fallback => 1;
 
