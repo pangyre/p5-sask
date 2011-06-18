@@ -4,7 +4,7 @@
 
 =head1 Name
 
-Sask — Staff of Ἀσκληπιός.
+Sask — Staff of Ἀσκληπιός, medical data library.
 
 =head1 Notice
 
