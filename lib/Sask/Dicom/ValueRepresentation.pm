@@ -2,6 +2,8 @@ package Sask::Dicom::ValueRepresentation;
 use Mouse;
 use Mouse::Util::TypeConstraints;
 
+# use Sub::Exporter or something to make a vr(self) --> new exported by default.
+
 use overload q{""} => sub { +shift->code }, fallback => 1;
 
 sub _trim {

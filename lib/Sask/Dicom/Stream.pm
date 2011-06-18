@@ -14,11 +14,8 @@ has "io" =>
     required => 1,
 #?    lazy => 1,
     handles => [qw( sysseek sysread )],
+    trigger => sub { binmode +shift->{io}, ":bytes" },
     ;
-
-after "io" => sub {
-    binmode +shift->{io}, ":bytes";
-};
 
 # ???
 has "mode" =>
