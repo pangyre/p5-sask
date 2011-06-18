@@ -2,11 +2,17 @@
 
 =head1 Resources
 
+=head2 Links
+
 =over 4
 
-=item L<http://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html>.
+=item * L<http://www.nlm.nih.gov/research/umls/images/meta_e_diagram.jpg>
 
-=item L<http://www.nlm.nih.gov/mesh/filelist.html>.
+Save it in a public domain folder?
+
+=item * L<http://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html>
+
+=item * L<http://www.nlm.nih.gov/mesh/filelist.html>
 
 =back
 
