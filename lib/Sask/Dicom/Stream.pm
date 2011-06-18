@@ -80,7 +80,7 @@ sub read_meta_information {
     while ( $self->io->sysread($buf,6) )
     {
         my ( $group, $element, $vr ) = unpack "${us_template}2 A2", $buf;
-        $vr = Sask::Dicom::ValueRepresentation->new({code => $vr});
+        $vr = eval { Sask::Dicom::ValueRepresentation->new({code => $vr}) };
         printf("%04x,%04x VR:%s\n",
                $group, $element, $vr);
 
@@ -98,7 +98,8 @@ sub read_meta_information {
         }
         printf("length -> %s\n", $length);
         $self->io->sysread($buf,$length);
-        print "skipping..." and next if $vr->fml or $length > 100;
+        print "skipping..." and next if $length > 100;
+# $vr->fml or $length > 100;
         my $value = unpack "A*", $buf;
         $value =~ s/[^[:print:]+]//g;
         printf(" value -> %s\n", $value);
