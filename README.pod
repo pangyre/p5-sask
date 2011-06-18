@@ -1,0 +1,13 @@
+=pod
+
+=head1 Resources
+
+=over 4
+
+=item L<http://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html>.
+
+=item L<http://www.nlm.nih.gov/mesh/filelist.html>.
+
+=back
+
+=cut
