@@ -6,6 +6,10 @@
 
 Sask — Staff of Ἀσκληπιός.
 
+=head1 Notice
+
+This is completely exerimental.
+
 =head1 Resources
 
 =head2 Links
