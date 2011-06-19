@@ -79,7 +79,7 @@ sub read_meta_information {
     {
         my ( $group, $element, $vr ) = unpack "${us_template}2 A2", $buf;
         $vr = eval { vr($vr) };
-        printf("%04x,%04x VR:%s\n",
+        printf("%04X,%04X %s ",
                $group, $element, $vr);
 
         my $length;
@@ -94,13 +94,14 @@ sub read_meta_information {
             sysread($io,$buf,2);
             $length = unpack $us_template, $buf;
         }
-        printf("length -> %s\n", $length);
+#        printf("length -> %s\n", $length);
         $self->io->sysread($buf,$length);
-        print "skipping..." and next if $length > 100;
+        print "skipping..." and next if $length > 100
+            or $vr eq "SQ";
 # $vr->fml or $length > 100;
         my $value = unpack "A*", $buf;
         $value =~ s/[^[:print:]+]//g;
-        printf(" value -> %s\n", $value);
+        printf("%s\n", $value);
     }
 }
 
