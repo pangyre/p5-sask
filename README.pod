@@ -20,6 +20,8 @@ This is completely exerimental.
 
 Save it in a public domain folder?
 
+=item * L<ftp://medical.nema.org/medical/dicom/2009/>
+
 =item * L<http://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html>
 
 =item * L<http://www.nlm.nih.gov/mesh/filelist.html>
