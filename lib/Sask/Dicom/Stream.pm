@@ -79,7 +79,7 @@ sub read_meta_information {
     {
         my ( $group, $element, $vr ) = unpack "${us_template}2 A2", $buf;
         $vr = eval { vr($vr) };
-        printf("%04X,%04X %s ",
+        printf("(%04X,%04X) %s",
                $group, $element, $vr);
 
         my $length;
@@ -101,7 +101,7 @@ sub read_meta_information {
 # $vr->fml or $length > 100;
         my $value = unpack "A*", $buf;
         $value =~ s/[^[:print:]+]//g;
-        printf("%s\n", $value);
+        printf(" %s\n", $value);
     }
 }
 

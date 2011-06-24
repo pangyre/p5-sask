@@ -2,7 +2,7 @@ package Sask::Dicom::ValueRepresentation;
 use Mouse;
 use Mouse::Util::TypeConstraints;
 
-use Sub::Exporter -setup => { exports => [qw(  vr )] };
+use Sub::Exporter -setup => { exports => [qw( vr )] };
 
 sub vr {
     __PACKAGE__->new({ code => +shift });
@@ -29,180 +29,187 @@ our %VR = (
     AS => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
     },
     AT => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
     },
     CS => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
     },
     DA => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
     },
     DS => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
     },
     DT => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
     },
     FL => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
     },
     FD => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
     },
     IS => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
     },
     LO => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
     },
     LT => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
     },
     OB => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
         two_and_four => 1,
     },
     OF => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
     },
     OW => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
         two_and_four => 1,
     },
     OX => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
     },
     PN => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
     },
     SH => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
     },
     SL => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
     },
     SQ => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
         two_and_four => 1,
     },
     SS => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
     },
     ST => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
     },
     TM => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
     },
     UI => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {
+            local $_ = shift || return;
+            65 > length
+            and /\A(?=[^0])(?:(?:[1-9][0-9]*\.?)|(?:(?<=\.)0(?=\.|\z))){2,}(?<=\d)\z/;
+        },
         coercion => sub { },
     },
     UL => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {
+            local $_ = length($_[0]);
+            0 <= $_ and $_ < 4_294_967_296; # 2**32
+        },
         coercion => sub { },
     },
     UN => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
     },
     US => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
         two_and_four => 1,
     },
     UT => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
         two_and_four => 1,
     },
     XS => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
     },
     XO => {
         type => "",
         name => "",
-        validation => sub {  },
+        validation => sub {},
         coercion => sub { },
     }
     );
@@ -234,3 +241,7 @@ DICOM Value Representation Codes
 http://medical.nema.org/dicom/2004/04_05PU.PDF p25
 http://idlastro.gsfc.nasa.gov/idl_html_help/Value_Representations.html
 http://johnpella.com/DICOM_VR_Codes.htm
+
+
+       unless $pen =~ /\A(?=[^0])(?:(?:[1-9][0-9]*\.?)|(?:(?<=\.)0(?=\.|\z)))+(?<=[0-9])\z/;
+
