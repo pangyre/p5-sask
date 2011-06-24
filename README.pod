@@ -32,12 +32,14 @@ References from L<Image::ExifTool::DICOM>.
 
 =over 4
 
-=item # L<http://medical.nema.org/>
+=item L<http://medical.nema.org/>
 
-=item # L<http://www.sph.sc.edu/comd/rorden/dicom.html>
+=item L<http://www.sph.sc.edu/comd/rorden/dicom.html>
 
-=item # L<http://www.dclunie.com/>
+=item L<http://www.dclunie.com/>
 
-=item # L<http://www.gehealthcare.com/usen/interoperability/dicom/docs/2258357r3.pdf>
+=item L<http://www.gehealthcare.com/usen/interoperability/dicom/docs/2258357r3.pdf>
+
+=back
 
 =cut
