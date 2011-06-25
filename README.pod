@@ -42,4 +42,12 @@ References from L<Image::ExifTool::DICOM>.
 
 =back
 
+ IOD
+ IE
+ VRs
+ Tag(Group) - VRtype
+
 =cut
+
+
+

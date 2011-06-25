@@ -1,0 +1,43 @@
+#!/usr/bin/env perl
+use warnings;
+use strict;
+
+my $plain;
+while (<DATA>)
+{
+   chomp;
+   s/\#.+//;
+   s/\A(\p{letter}\S*)//;
+   my $template = $1;
+   $template || next;
+   s/\s+//g;
+   $plain .= pack($template,$_);
+}
+
+print qq{"$plain"}, $/;
+
+#while ( length $plain )
+#{
+#   my $hex = substr( $plain, 0, 2, "" );
+#   print $hex, $/;
+#}
+# print $plain, $/;
+
+exit 0;
+
+__DATA__
+L2 0000 0000    # (0000,0000)
+04 00 00 00  # vr length
+38 00 00 00  # 56 bytes
+0000 0200    # 0002,0000
+12 00 00 00  # 18 bytes
+312e322e3834302e31303030382e312e3100 # 1.2.840.10008.1.1\0
+0000 0001 # 0000,0100
+02000000 # vr length
+3000 # 48 bytes
+0000 1001 # 0000,0110
+02000000 # vr length=2
+0200 # 2 bytes
+0000 0008 # 0000.0800
+02000000 # vr length=2
+0101 # 0x0101

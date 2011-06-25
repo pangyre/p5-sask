@@ -8,6 +8,8 @@ BEGIN { use_ok("Sask::Dicom::ValueRepresentation") }
 # UI validation.
 {
     my $ui = $Sask::Dicom::ValueRepresentation::VR{UI};
+    my $code = $ui->{validation};
+
     my @bad_ui = (
                   undef,
                   "",
@@ -21,7 +23,6 @@ BEGIN { use_ok("Sask::Dicom::ValueRepresentation") }
                   1_000_000,
                   );
 
-    my $code = $ui->{validation};
     for my $bad ( @bad_ui )
     {
         no warnings "uninitialized";
@@ -35,8 +36,6 @@ BEGIN { use_ok("Sask::Dicom::ValueRepresentation") }
                    "123456789.123456789.123456789.123456789.123456789.123456789.1234",
                   );
 
-    my $ui = $Sask::Dicom::ValueRepresentation::VR{UI};
-    my $code = $ui->{validation};
     for my $good ( @good_ui )
     {
         no warnings "uninitialized";

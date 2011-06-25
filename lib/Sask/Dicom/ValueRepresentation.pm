@@ -28,138 +28,149 @@ our %VR = (
     },
     AS => {
         type => "",
-        name => "",
-        validation => sub {},
-        coercion => sub { },
+        name => "Age String", # nnnD, nnnW, nnnM, nnnY
+        validation => sub {
+            local $_ = shift || return;
+            /\A[0-9]{1,3}[dwmy]\z/i; # Looser than spec.
+        },
+        coercion => sub {},
     },
     AT => {
-        type => "",
-        name => "",
-        validation => sub {},
-        coercion => sub { },
+        type => "ULONG",
+        name => "Attribute Tag",
+        validation => sub { # How to handle endianness?
+            local $_ = shift || return;
+            # pack(...??? bitwise instead?
+        },
+        coercion => sub {},
     },
-    CS => {
+    CS => {# A string of characters with leading or trailing spaces insignificant
         type => "",
-        name => "",
-        validation => sub {},
-        coercion => sub { },
+        name => "Code String",
+        validation => sub {
+            local $_ = shift || return;
+            length($_) <= 16 # bytes...?
+                and /\A[0-9 _A-Z]+\z/
+                and /[0-9_A-Z]/;                
+        },
+        coercion => sub {},
     },
     DA => {
         type => "",
         name => "",
         validation => sub {},
-        coercion => sub { },
+        coercion => sub {},
     },
     DS => {
         type => "",
         name => "",
         validation => sub {},
-        coercion => sub { },
+        coercion => sub {},
     },
     DT => {
         type => "",
         name => "",
         validation => sub {},
-        coercion => sub { },
+        coercion => sub {},
     },
     FL => {
         type => "",
         name => "",
         validation => sub {},
-        coercion => sub { },
+        coercion => sub {},
     },
     FD => {
         type => "",
         name => "",
         validation => sub {},
-        coercion => sub { },
+        coercion => sub {},
     },
     IS => {
         type => "",
         name => "",
         validation => sub {},
-        coercion => sub { },
+        coercion => sub {},
     },
     LO => {
         type => "",
         name => "",
         validation => sub {},
-        coercion => sub { },
+        coercion => sub {},
     },
     LT => {
         type => "",
         name => "",
         validation => sub {},
-        coercion => sub { },
+        coercion => sub {},
     },
     OB => {
         type => "",
         name => "",
         validation => sub {},
-        coercion => sub { },
+        coercion => sub {},
         two_and_four => 1,
     },
     OF => {
         type => "",
         name => "",
         validation => sub {},
-        coercion => sub { },
+        coercion => sub {},
     },
     OW => {
         type => "",
         name => "",
         validation => sub {},
-        coercion => sub { },
+        coercion => sub {},
         two_and_four => 1,
     },
     OX => {
         type => "",
         name => "",
         validation => sub {},
-        coercion => sub { },
+        coercion => sub {},
     },
     PN => {
         type => "",
         name => "",
         validation => sub {},
-        coercion => sub { },
+        coercion => sub {},
     },
     SH => {
         type => "",
         name => "",
         validation => sub {},
-        coercion => sub { },
+        coercion => sub {},
     },
     SL => {
         type => "",
         name => "",
         validation => sub {},
-        coercion => sub { },
+        coercion => sub {},
     },
     SQ => {
         type => "",
         name => "",
         validation => sub {},
-        coercion => sub { },
+        coercion => sub {},
         two_and_four => 1,
     },
     SS => {
         type => "",
         name => "",
         validation => sub {},
-        coercion => sub { },
+        coercion => sub {},
     },
     ST => {
         type => "",
         name => "",
         validation => sub {},
-        coercion => sub { },
+        coercion => sub {},
     },
     TM => {
         type => "",
         name => "",
         validation => sub {},
-        coercion => sub { },
+        coercion => sub {},
     },
     UI => {
         type => "",
@@ -169,7 +180,7 @@ our %VR = (
             65 > length
             and /\A(?=[^0])(?:(?:[1-9][0-9]*\.?)|(?:(?<=\.)0(?=\.|\z))){2,}(?<=\d)\z/;
         },
-        coercion => sub { },
+        coercion => sub {},
     },
     UL => {
         type => "",
@@ -178,39 +189,42 @@ our %VR = (
             local $_ = length($_[0]);
             0 <= $_ and $_ < 4_294_967_296; # 2**32
         },
-        coercion => sub { },
+        coercion => sub {},
     },
     UN => {
         type => "",
-        name => "",
-        validation => sub {},
-        coercion => sub { },
+        name => "Unknown",
+        validation => sub {}, # Any length, BYTE.
+        coercion => sub {},
     },
     US => {
         type => "",
-        name => "",
-        validation => sub {},
-        coercion => sub { },
+        name => "Unsigned Short",
+        validation => sub {
+            local $_ = length($_[0]);
+            0 <= $_ and $_ < 65_536;
+        },
+        coercion => sub {},
         two_and_four => 1,
     },
     UT => {
         type => "",
-        name => "",
+        name => "Unlimited Text",
         validation => sub {},
-        coercion => sub { },
+        coercion => sub {},
         two_and_four => 1,
     },
     XS => {
         type => "",
         name => "",
         validation => sub {},
-        coercion => sub { },
+        coercion => sub {},
     },
     XO => {
         type => "",
         name => "",
         validation => sub {},
-        coercion => sub { },
+        coercion => sub {},
     }
     );
 
